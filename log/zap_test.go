@@ -3,7 +3,7 @@ package log
 import (
 	"context"
 	"fmt"
-	"rabbitmq-demo/mcontext"
+	"github.com/nildebug/tools/mcontext"
 	"testing"
 	"time"
 )
