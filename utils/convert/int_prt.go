@@ -1,13 +1,12 @@
 package convert
 
-func GetInt32Prt(i int32) *int32 {
-	return &i
-}
+import "time"
 
-func GetInt64Prt(i int64) *int64 {
-	return &i
-}
-
-func GetInt(i int) *int {
-	return &i
+// GetValuePrt GetValuePrt[T int | int32 | int64 | bool | float32 | float64]
+//
+//	@Description: 获取基础值的指针
+//	@param v
+//	@return *T
+func GetValuePrt[T int | int32 | int64 | bool | float32 | float64 | uint | time.Time](v T) *T {
+	return &v
 }
