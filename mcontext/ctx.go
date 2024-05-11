@@ -16,7 +16,7 @@ package mcontext
 
 import "context"
 
-const CenterKey string = "key"
+const CenterKey string = "userKey"
 
 func GetCenterKey(ctx context.Context) string {
 	return GetStringValue(ctx, CenterKey)

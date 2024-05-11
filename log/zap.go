@@ -16,9 +16,10 @@ package log
 
 import (
 	"context"
+	"github.com/nildebug/tools/mcontext"
 	"os"
 	"path/filepath"
-	"rabbitmq-demo/mcontext"
+
 	"time"
 
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
