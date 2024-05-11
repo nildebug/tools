@@ -168,7 +168,7 @@ func (c *Client) initConsume() error {
 		}
 		c.queueName = q.Name
 	case AMQP_MODE_QUEUE:
-		queue, err := channel.QueueDeclare(c.queueName, false, true, false, false, nil)
+		queue, err := channel.QueueDeclare(c.queueName, true, false, false, false, nil)
 		if err != nil {
 			return fmt.Errorf("queueDeclare fail err:%v", err)
 		}
@@ -205,10 +205,11 @@ func (c *Client) initProducer() error {
 	if err != nil {
 		return fmt.Errorf("rabbitmq channel err:%v", err)
 	}
-	//queue, err := c.channel.QueueDeclare(c.queueName, false, true, false, false, nil)
-	//if err != nil {
-	//	return fmt.Errorf("rabbitmq queue err:%v", err)
-	//}
+	//持久化队列
+	_, err = c.channel.QueueDeclare(c.queueName, true, false, false, false, nil)
+	if err != nil {
+		return fmt.Errorf("rabbitmq queue err:%v", err)
+	}
 	//c.queueName = queue.Name
 	return nil
 }
