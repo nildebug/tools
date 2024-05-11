@@ -218,6 +218,7 @@ func (c *Client) SendMessage(ctx context.Context, buf []byte) error {
 		return fmt.Errorf("rabbitmq channel is nil")
 	}
 	return c.channel.PublishWithContext(ctx, c.exchangeName, c.queueName, false, false, amqp.Publishing{
-		Body: buf,
+		DeliveryMode: amqp.Persistent, //持久化消息
+		Body:         buf,
 	})
 }

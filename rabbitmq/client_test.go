@@ -77,12 +77,15 @@ func TestProducerQueue(t *testing.T) {
 		for i := 0; i < 100; i++ {
 			if err := producerQueue.SendMessage(ctx, []byte(fmt.Sprintf("hello %d", i))); err != nil {
 				fmt.Println("sendMessage fail", err)
+			} else {
+				fmt.Println("发送成功")
 			}
 			time.Sleep(1 * time.Second)
 		}
 	}()
 
 	go func() {
+		time.Sleep(20 * time.Second)
 		if _, err := NewConsumer(ctx, URLConfig{
 			IPAddr:   "127.0.0.1",
 			Port:     5672,
@@ -96,19 +99,19 @@ func TestProducerQueue(t *testing.T) {
 		}
 	}()
 
-	go func() {
-		if _, err := NewConsumer(ctx, URLConfig{
-			IPAddr:   "127.0.0.1",
-			Port:     5672,
-			Vhost:    "",
-			UserName: "guest",
-			PassWord: "guest",
-		}, AMQP_MODE_QUEUE, "", "queue_logs", func(data []byte) {
-			fmt.Println("b queue revData", string(data))
-		}); err != nil {
-			fmt.Println(err)
-		}
-	}()
+	//go func() {
+	//	if _, err := NewConsumer(ctx, URLConfig{
+	//		IPAddr:   "127.0.0.1",
+	//		Port:     5672,
+	//		Vhost:    "",
+	//		UserName: "guest",
+	//		PassWord: "guest",
+	//	}, AMQP_MODE_QUEUE, "", "queue_logs", func(data []byte) {
+	//		fmt.Println("b queue revData", string(data))
+	//	}); err != nil {
+	//		fmt.Println(err)
+	//	}
+	//}()
 
 	select {}
 }
