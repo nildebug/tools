@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/nildebug/tools/log"
+	"math/rand"
 	"net"
 	"os"
 	"os/signal"
@@ -56,6 +57,18 @@ func GetLocalIPs() {
 	}
 
 	log.ZDebug(context.TODO(), "localIP", "len", len(LocalIPs), "ips", LocalIPs)
+}
+
+// GetRandLocalIP
+//
+//	@Description: 获取本地随机IP
+//	@return string
+func GetRandLocalIP() string {
+	if len(LocalIPs) == 0 {
+		return ""
+	}
+	index := rand.Intn(len(LocalIPs))
+	return LocalIPs[index]
 }
 
 // GetCostTime
