@@ -24,7 +24,7 @@ var LocalIPs []string
 
 // GetLocalIPs
 //
-//	@Description: 获取本地IP地址
+//	@Description: 获取本地IP地址 过滤私有地址
 func GetLocalIPs() {
 
 	interfaces, err := net.Interfaces()
@@ -49,35 +49,13 @@ func GetLocalIPs() {
 			if !ok || ip.IP.IsLoopback() {
 				continue
 			}
-			if ip.IP.To4() != nil {
+			if ip.IP.To4() != nil && !ip.IP.IsPrivate() {
 				LocalIPs = append(LocalIPs, ip.IP.String())
-				log.ZDebug(context.TODO(), "localIP", "ip", ip.IP.String(), "name", iface.Name, "Flags", iface.Flags)
 			}
 		}
 	}
-}
 
-// IsPrivateIP
-//
-//	@Description: 绑定IP地址是否为10 172 192 段
-//	@param ip
-//	@return bool
-func IsPrivateIP(ip net.IP) bool {
-	privateIPBlocks := []*net.IPNet{
-		// 10.0.0.0/8
-		{IP: net.IPv4(10, 0, 0, 0), Mask: net.CIDRMask(8, 32)},
-		// 172.16.0.0/12
-		{IP: net.IPv4(172, 16, 0, 0), Mask: net.CIDRMask(12, 32)},
-		// 192.168.0.0/16
-		{IP: net.IPv4(192, 168, 0, 0), Mask: net.CIDRMask(16, 32)},
-	}
-
-	for _, block := range privateIPBlocks {
-		if block.Contains(ip) {
-			return true
-		}
-	}
-	return false
+	log.ZDebug(context.TODO(), "localIP", "len", len(LocalIPs), "ips", LocalIPs)
 }
 
 // GetCostTime
