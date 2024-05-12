@@ -1,9 +1,7 @@
 package utils
 
 import (
-	"context"
 	"fmt"
-	"github.com/nildebug/tools/log"
 	"math/rand"
 	"net"
 	"os"
@@ -30,7 +28,7 @@ func GetLocalIPs() {
 
 	interfaces, err := net.Interfaces()
 	if err != nil {
-		log.ZError(context.TODO(), "获取本地绑定IP地址失败", err)
+		fmt.Println("get local ip error", err)
 		return
 	}
 
@@ -41,7 +39,6 @@ func GetLocalIPs() {
 		}
 		addrs, err := iface.Addrs()
 		if err != nil {
-			log.ZError(context.TODO(), "获取本地绑定IP地址失败", err)
 			continue
 		}
 
@@ -55,8 +52,6 @@ func GetLocalIPs() {
 			}
 		}
 	}
-
-	log.ZDebug(context.TODO(), "localIP", "len", len(LocalIPs), "ips", LocalIPs)
 }
 
 // GetRandLocalIP
