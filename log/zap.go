@@ -17,6 +17,7 @@ package log
 import (
 	"context"
 	"github.com/nildebug/tools/mcontext"
+	"github.com/nildebug/tools/utils"
 	"os"
 	"path/filepath"
 
@@ -188,7 +189,13 @@ func (l *ZapLogger) cores(isStdout bool, isJson bool, logLocation string, rotate
 
 func (l *ZapLogger) customCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
 	//s := "[file:" + caller.FullPath() + "]"
-	s := caller.FullPath() //使用完整路径
+	s := ""
+	if utils.IsDev() {
+		s = caller.FullPath() //使用完整路径
+	} else {
+		s = caller.TrimmedPath() //使用短路径
+	}
+
 	//caller.Function
 	// color, ok := _levelToColor[l.level]
 	// if !ok {
@@ -259,6 +266,7 @@ func (l *ZapLogger) kvAppend(ctx context.Context, keysAndValues []interface{}) [
 	if key != "" {
 		keysAndValues = append([]interface{}{mcontext.CenterKey, key}, keysAndValues...)
 	}
+	utils.IsDev()
 	return keysAndValues
 }
 
