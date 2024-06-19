@@ -14,4 +14,11 @@ func TestGetLocalIPs(t *testing.T) {
 	//time.Sleep(1 * time.Second)
 	log.ZDebug(context.TODO(), GetCostTime(startTime))
 
+	smax := 10
+	smin := 1
+	RandInt(smax, smin)
+
+	var s int64 = 1
+	var b int64 = 2
+	RandInt(s, b)
 }

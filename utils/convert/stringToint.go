@@ -5,13 +5,8 @@ import (
 	"strings"
 )
 
-// StringToInt
-// [T ~int | ~int32 | ~int64]
-//
-//	@Description:
-//	@param s
-//	@return T
-func StringToInt[T ~int | ~int32 | ~int64](s string) T {
+// StringToInt 字符串转Int
+func StringToInt[T int | int32 | int64](s string) T {
 	s = strings.ReplaceAll(s, ",", "")
 	var zero T
 	switch any(zero).(type) {
